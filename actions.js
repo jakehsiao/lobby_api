@@ -112,6 +112,7 @@ function clean_empty_rooms(rooms) {
   for (let i=len-1; i>=0; i--) {
     if (rooms[i].players.length == 0) {
       rooms.splice(i, 1);
+      console.log("空房间清除了哦");
     }
   }
 }

@@ -44,6 +44,7 @@ app.post('/entergame', (req, res) => {
 app.post('/leavelobby', (req, res) => {
   console.log(`Receive leave lobby with ${req.body}`);
   let msg = leave_lobby(rooms, req.body.player_id);
+  console.log(msg);
   return res.send(msg);
 });
 
