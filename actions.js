@@ -9,12 +9,12 @@ const player_template = {
   entered: false,
 };
 
-const MAX_ROOM_NUM = 10;
+const MAX_ROOM_NUM = 100;
 
-function create_room(rooms, player_id) {
+function create_room(rooms, player_id, max_players) {
   if (rooms.length < MAX_ROOM_NUM) {
     let room_id = v4().slice(0,4);
-    let new_room = {...room_template, players: [{...player_template, player_id}], room_id};
+    let new_room = {...room_template, players: [{...player_template, player_id}], room_id, max_players: max_players || 4};
     rooms.push(new_room);
     return `创建成功 ${room_id}`;
   }
@@ -23,7 +23,7 @@ function create_room(rooms, player_id) {
   }
 }
 
-function enter_room(rooms, player_id, room_id, max_players) {
+function enter_room(rooms, player_id, room_id) {
   // MAX_PLAYERS is something on frontend, not on here, yes make API as simple as possible, and let one thing being determined in only one place
   // Also, change "entered" is also on frontend
   // Emmm...I feel this way is not that cool, this should be more state specific, and every move check the state
@@ -35,11 +35,17 @@ function enter_room(rooms, player_id, room_id, max_players) {
       if (room.players.find(p => p.entered) != undefined) {
         return "已经开始了哦";
       }
-      else if (room.players.length >= (max_players || 4)) {
+      else if (room.players.length >= (room.max_players || 4)) {
         return "人满了哦";
       }
       else {
         room.players.push({...player_template, player_id});
+
+        if (room.players.length >= room.max_players) {
+          for (let p of room.players) {
+            p.entered = true;
+          }
+        }
         return `加入成功`;
       }
     }

@@ -25,12 +25,12 @@ app.get('/rooms', (req, res) => {
 // });
 
 app.post('/create', (req, res) => {
-  let created = create_room(rooms, req.body.player_id);
+  let created = create_room(rooms, req.body.player_id, req.body.max_players);
   return res.send(created);
 });
 
 app.post('/enter', (req, res) => {
-  let msg = enter_room(rooms, req.body.player_id, req.body.room_id, req.body.max_players);
+  let msg = enter_room(rooms, req.body.player_id, req.body.room_id);
   return res.send(msg);
 });
 app.post('/leave', (req, res) => {
