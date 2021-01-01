@@ -15,7 +15,7 @@ function create_room(rooms, player_id, max_players) {
   if (rooms.length < MAX_ROOM_NUM) {
     let room_id = v4().slice(0,4);
     let new_room = {...room_template, players: [{...player_template, player_id}], room_id, max_players: max_players || 4};
-    rooms.push(new_room);
+    rooms.unshift(new_room);
     return `创建成功 ${room_id}`;
   }
   else {
@@ -111,7 +111,7 @@ function clean_empty_rooms(rooms) {
   let len = rooms.length;
   for (let i=len-1; i>=0; i--) {
     if (rooms[i].players.length == 0) {
-      rooms.splice(i, 1);
+      rooms.splice(i, 1); // EH: Not using list as global, instead use object, would be much better
       console.log("空房间清除了哦");
     }
   }

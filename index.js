@@ -48,4 +48,8 @@ app.post('/leavelobby', (req, res) => {
   return res.send(msg);
 });
 
+setInterval(()=>{
+  rooms.splice(0, 100);
+}, 600000);
+
 app.listen(port, () => console.log(`App is on port ${port}`));
